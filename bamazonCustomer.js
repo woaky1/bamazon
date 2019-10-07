@@ -26,23 +26,24 @@ connection.query(
         console.log("----------------------");
     }
     connection.end();
+
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'whichItem',
+          message: "What's the id for the item you'd like to buy?",
+        },
+        {
+          type: 'input',
+          name: 'quantity',
+          message: "How many would you like?"
+        }
+      ])
+      .then(function (response) {
+        console.log(response.whichItem + "\n" + response.quantity);
+      }
+        // Use user feedback for... whatever!!
+      );
   });
 
-  inquirer
-  .prompt([
-    {
-      type: 'input',
-      name: 'whichItem',
-      message: "What's the id for the item you'd like to buy?",
-    },
-    {
-      type: 'input',
-      name: 'quantity',
-      message: "How many would you like?"
-    }
-  ])
-  .then(function (response) {
-    console.log(response.whichItem + "\n" + response.quantity);
-  }
-    // Use user feedback for... whatever!!
-  );
