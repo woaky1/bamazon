@@ -74,10 +74,10 @@ connection.query(
                 item_id: response.whichItem
               }
               ],
-              function (error, results) {
+              function (error) {
                 if (error) throw error;
                 console.log("Your order is on it's way!");
-                // console.log("Total cost of purchase: $" + results[whichItem])
+                console.log("Total cost of purchase: $" + (results[itemIndex].price * response.quantity))
               }
             )} else {
               console.log("Insufficient quantity!");
