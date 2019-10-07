@@ -38,19 +38,11 @@ connection.connect(function(err) {
             
             switch (response.choice) {
                 case "View Products for Sale":
-                    connection.query('SELECT * FROM products', function (error, results) {
-                        if (error) throw error;
-                        console.log(results);
-                        
-                        for (var i = 0; i < results.length; i++) {
-                            console.log(`Item ID: ${results[i].item_id}\nProduct Name: ${results[i].product_name}\nPrice: ${results[i].price}\nQuantity: ${results[i].stock_quantity}`);
-                            console.log("--------------------------");
-                            
-                        }
-                        connection.end();
-                      });
+                    productsForSale();
                     break;
-            
+                case "View Low Inventory":
+                    lowInventory();
+                    break;
                 default:
                     break;
             }
@@ -58,4 +50,24 @@ connection.connect(function(err) {
   });
 
 
+function productsForSale(){
+    connection.query('SELECT * FROM products', function (error, results) {
+        if (error) throw error;
+        for (var i = 0; i < results.length; i++) {
+            console.log(`Item ID: ${results[i].item_id}\nProduct Name: ${results[i].product_name}\nPrice: ${results[i].price}\nQuantity: ${results[i].stock_quantity}`);
+            console.log("--------------------------");
+        }
+        connection.end();
+      });
+}
 
+function lowInventory() {
+    connection.query("SELECT * from products WHERE stock_quantity < 5", function(error, results) {
+        if (error) throw error;
+        for (var j = 0; j < results.length; j++) {
+            console.log(`Item ID: ${results[j].item_id}\nProduct Name: ${results[j].product_name}\nPrice: ${results[j].price}\nQuantity: ${results[j].stock_quantity}`);
+            console.log("--------------------------");
+        }
+        connection.end();
+    })
+}
