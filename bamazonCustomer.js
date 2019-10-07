@@ -25,7 +25,6 @@ connection.query(
         console.log("Item ID: " + results[i].item_id + "\n" + results[i].product_name + "\n" + "$" + results[i].price)
         console.log("----------------------");
     }
-    connection.end();
 
     inquirer
       .prompt([
@@ -57,6 +56,36 @@ connection.query(
         }])
       .then(function (response) {
         console.log(response.whichItem + "\n" + response.quantity);
+        connection.query(
+          `SELECT stock_quantity FROM products WHERE item_id = ${response.whichItem}`,
+          function (error, results) {
+          console.log(results);
+          
+          if (error) throw error;
+          console.log("response.quantity: " + response.quantity + "\nresults.stock_quantity: " + results[0].stock_quantity);
+          
+          if (response.quantity <= results[0].stock_quantity) {
+            var newQuantity = results[0].stock_quantity - response.quantity;
+            console.log(newQuantity);
+            connection.query(
+              "UPDATE products SET ? WHERE ?", 
+              [
+                {
+                stock_quantity: newQuantity
+              },
+              {
+                item_id: response.whichItem
+              }
+              ],
+              function (error, results) {
+                if (error) throw error;
+                console.log("Your order is on it's way!");
+              }
+            )} else {
+              console.log("Didn't work.");
+              
+            }
+          connection.end();
       });
   });
-
+})
