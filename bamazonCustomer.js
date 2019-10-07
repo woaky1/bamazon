@@ -18,9 +18,9 @@ connection.connect(function(err) {
     console.log('connected as id ' + connection.threadId);
   });
    
-//   connection.query('SELECT * FROM products', function (error, results, fields) {
-//     if (error) throw error;
-//     console.log('The solution is: ', results[0].solution);
-//   });
+  connection.query('SELECT * FROM products', function (error, results) {
+    if (error) throw error;
+    console.log(results);
+  });
    
   connection.end();
