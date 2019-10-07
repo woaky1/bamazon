@@ -33,17 +33,30 @@ connection.query(
           type: 'input',
           name: 'whichItem',
           message: "What's the id for the item you'd like to buy?",
+          validate: function(value) {
+            var pass = parseInt(value);
+            if ((pass) && value <= results.length) {
+              return true;
+            }
+      
+            return 'Please enter a valid item id number.';
+          }
         },
         {
           type: 'input',
           name: 'quantity',
-          message: "How many would you like?"
-        }
-      ])
+          message: "How many would you like?",
+          validate: function(value) {
+            var pass = parseInt(value);
+            if (pass) {
+              return true;
+            }
+      
+            return 'Please enter a number.';
+          }
+        }])
       .then(function (response) {
         console.log(response.whichItem + "\n" + response.quantity);
-      }
-        // Use user feedback for... whatever!!
-      );
+      });
   });
 
