@@ -1,9 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
 
-var mysql = require("mysql");
-var inquirer = require("inquirer");
-
 var connection = mysql.createConnection({
     host     : 'localhost',
     port: 3306,
@@ -43,6 +40,9 @@ connection.connect(function(err) {
                 case "View Low Inventory":
                     lowInventory();
                     break;
+                case "Add to Inventory":
+                    addInventory();
+                    break;
                 default:
                     break;
             }
@@ -70,4 +70,33 @@ function lowInventory() {
         }
         connection.end();
     })
+}
+
+function addInventory() {
+    inquirer
+    .prompt([
+        {
+            type: 'input',
+            name: 'itemID',
+            message: "What's the Item ID you'd like to add stock to?"
+          },
+          {
+            type: 'input',
+            name: 'addedStock',
+            message: "How much should be added?"
+          }
+      ])
+      .then(function (response) {
+        var stockNum = parseInt(response.addedStock);
+        var itemID = parseInt(response.itemID);
+        console.log("stockNum: " + stockNum + ", itemID: " + itemID);
+        connection.query(
+            `UPDATE products SET stock_quantity = stock_quantity + ${stockNum} WHERE item_id = ${itemID}`, function (error, results) {
+                if (error) throw error;
+                console.log(results.message);
+                console.log("Inventory Updated");
+                connection.end();
+            }
+            )
+      });
 }
