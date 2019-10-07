@@ -21,6 +21,7 @@ connection.connect(function(err) {
 connection.query(
     "SELECT * FROM products", function (error, results) {
     if (error) throw error;
+    console.log(results);
     for (var i = 0; i < results.length; i++) {
         console.log("Item ID: " + results[i].item_id + "\n" + results[i].product_name + "\n" + "$" + results[i].price)
         console.log("----------------------");
@@ -55,17 +56,13 @@ connection.query(
           }
         }])
       .then(function (response) {
+        var itemIndex = response.whichItem - 1;
+        console.log("response.quantity: " + response.quantity + "\nresults[itemIndex].stockquantity: " + results[itemIndex].stock_quantity);
         console.log(response.whichItem + "\n" + response.quantity);
-        connection.query(
-          `SELECT stock_quantity FROM products WHERE item_id = ${response.whichItem}`,
-          function (error, results) {
-          console.log(results);
-          
-          if (error) throw error;
-          console.log("response.quantity: " + response.quantity + "\nresults.stock_quantity: " + results[0].stock_quantity);
-          
-          if (response.quantity <= results[0].stock_quantity) {
-            var newQuantity = results[0].stock_quantity - response.quantity;
+        console.log("results[itemIndex].stock_quantity: " + results[itemIndex].stock_quantity);
+        
+          if (response.quantity <= results[itemIndex].stock_quantity) {
+            var newQuantity = results[itemIndex].stock_quantity - parseInt(response.quantity);
             console.log(newQuantity);
             connection.query(
               "UPDATE products SET ? WHERE ?", 
@@ -80,12 +77,11 @@ connection.query(
               function (error, results) {
                 if (error) throw error;
                 console.log("Your order is on it's way!");
+                // console.log("Total cost of purchase: $" + results[whichItem])
               }
             )} else {
-              console.log("Didn't work.");
-              
+              console.log("Insufficient quantity!");
             }
           connection.end();
       });
   });
-})
