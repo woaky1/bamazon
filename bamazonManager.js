@@ -19,6 +19,26 @@ connection.connect(function(err) {
     }
    
     console.log('connected as id ' + connection.threadId);
+    inquirer
+        .prompt([
+        {
+            type: "list",
+            name: "choice",
+            message: "Welcome, manager. What would you like to do?",
+            choices: [
+                "View Products for Sale",
+                "View Low Inventory",
+                "Add to Inventory",
+                "Add New Product"
+            ]
+        }
+        ])
+        .then(function (choice) {
+            console.log(choice);
+            // Use user feedback for... whatever!!
+        });
   });
+
+
 
   connection.end();
