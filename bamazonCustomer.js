@@ -21,11 +21,67 @@ connection.connect(function(err) {
 connection.query(
     "SELECT * FROM products", function (error, results) {
     if (error) throw error;
+    console.log(results);
     for (var i = 0; i < results.length; i++) {
-        console.log(results[i].item_id + "\n" + results[i].product_name + "\n" + results[i].price)
+        console.log("Item ID: " + results[i].item_id + "\n" + results[i].product_name + "\n" + "$" + results[i].price)
         console.log("----------------------");
     }
 
+    inquirer
+      .prompt([
+        {
+          type: 'input',
+          name: 'whichItem',
+          message: "What's the id for the item you'd like to buy?",
+          validate: function(value) {
+            var pass = parseInt(value);
+            if ((pass) && value <= results.length) {
+              return true;
+            }
+      
+            return 'Please enter a valid item id number.';
+          }
+        },
+        {
+          type: 'input',
+          name: 'quantity',
+          message: "How many would you like?",
+          validate: function(value) {
+            var pass = parseInt(value);
+            if (pass) {
+              return true;
+            }
+      
+            return 'Please enter a number.';
+          }
+        }])
+      .then(function (response) {
+        var itemIndex = response.whichItem - 1;
+        console.log("response.quantity: " + response.quantity + "\nresults[itemIndex].stockquantity: " + results[itemIndex].stock_quantity);
+        console.log(response.whichItem + "\n" + response.quantity);
+        console.log("results[itemIndex].stock_quantity: " + results[itemIndex].stock_quantity);
+        
+          if (response.quantity <= results[itemIndex].stock_quantity) {
+            var newQuantity = results[itemIndex].stock_quantity - parseInt(response.quantity);
+            console.log(newQuantity);
+            connection.query(
+              "UPDATE products SET ? WHERE ?", 
+              [
+                {
+                stock_quantity: newQuantity
+              },
+              {
+                item_id: response.whichItem
+              }
+              ],
+              function (error) {
+                if (error) throw error;
+                console.log("Your order is on it's way!");
+                console.log("Total cost of purchase: $" + (results[itemIndex].price * response.quantity))
+              }
+            )} else {
+              console.log("Insufficient quantity!");
+            }
+          connection.end();
+      });
   });
-   
-connection.end();

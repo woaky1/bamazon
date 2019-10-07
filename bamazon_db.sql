@@ -14,4 +14,9 @@ CREATE TABLE products (
 );
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Nintendo Switch", "Electronics", 299.99, 100), ("Nintendo Switch Lite", "Electronics", 199.99, 100), ("Whole Wheat Bread", "Food", 3.50, 200), ("Player's Handbook", "Books", 49.95, 25), ("Pillow", "Household", 20.00, 40), ("Bagel Bites", "Food", 2.69, 50), ("Toothpaste", "Pharmacy", 3.50, 64), ("AA batteries (pack of 4)", "Household", 7.00, 87), ("Ladyhawke (DVD)", "Vidoes", 9.99, 15), ("Elmer's Glue", "Household", 3.99, 250);
+VALUES ("Nintendo Switch", "Electronics", 299.99, 100), ("Nintendo Switch Lite", "Electronics", 199.99, 100), ("Whole Wheat Bread", "Food", 3.50, 200), ("Player's Handbook", "Books", 49.95, 25), ("Pillow", "Household", 20.00, 40), ("Bagel Bites", "Food", 2.69, 50), ("Toothpaste", "Pharmacy", 3.50, 64), ("AA batteries (pack of 4)", "Household", 7.00, 87), ("Ladyhawke (DVD)", "Videos", 9.99, 15), ("Elmer's Glue", "Household", 3.99, 250);
+
+select * from products;
+
+INSERT INTO products (product_name, department_name, price, stock_quantity)
+VALUES ("Jellycakes", "Food", 4.99, 0);
