@@ -64,20 +64,22 @@ connection.query(
           if (response.quantity <= results[itemIndex].stock_quantity) {
             var newQuantity = results[itemIndex].stock_quantity - parseInt(response.quantity);
             console.log(newQuantity);
+            var purchaseTotal = results[itemIndex].price * response.quantity
             connection.query(
               "UPDATE products SET ? WHERE ?", 
               [
                 {
-                stock_quantity: newQuantity
-              },
-              {
-                item_id: response.whichItem
-              }
+                  stock_quantity: newQuantity,
+                  product_sales: results[itemIndex].product_sales + purchaseTotal
+                },
+                {
+                  item_id: response.whichItem
+                }
               ],
               function (error) {
                 if (error) throw error;
                 console.log("Your order is on it's way!");
-                console.log("Total cost of purchase: $" + (results[itemIndex].price * response.quantity))
+                console.log("Total cost of purchase: $" + purchaseTotal)
               }
             )} else {
               console.log("Insufficient quantity!");
