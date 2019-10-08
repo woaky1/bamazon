@@ -20,3 +20,5 @@ select * from products;
 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Jellycakes", "Food", 4.99, 0);
+
+SELECT * from products WHERE stock_quantity < 5;
