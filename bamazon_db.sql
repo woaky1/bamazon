@@ -30,3 +30,8 @@ CREATE TABLE departments (
 
 ALTER TABLE products
 ADD product_sales DECIMAL(10,2) NOT NULL;
+
+SELECT products.department_name, products.product_sales, departments.department_name, departments.department_id, departments.over_head_cost FROM departments LEFT JOIN products ON products.department_name = departments.department_name;
+
+INSERT INTO departments (department_name, over_head_cost)
+VALUES ("Electronics", 10000.00), ("Food", 5000.00), ("Books", 1000.00), ("Household", 20000.00), ("Pharmacy", 5000.00), ("Videos", 1000.00);

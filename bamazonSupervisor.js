@@ -34,7 +34,7 @@ connection.connect(function(err) {
     if(response.action === 'View Product Sales by Department') {
       console.log("Picked View Sales");
       
-      // productSales();
+      productSales();
     } else {
       // createNewDepartment();
       console.log("Picked New Dept.");
@@ -44,4 +44,6 @@ connection.connect(function(err) {
   })
 });
 
-
+function productSales() {
+  connection.query()
+}
