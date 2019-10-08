@@ -21,4 +21,12 @@ select * from products;
 INSERT INTO products (product_name, department_name, price, stock_quantity)
 VALUES ("Jellycakes", "Food", 4.99, 0);
 
-SELECT * from products WHERE stock_quantity < 5;
+CREATE TABLE departments (
+  department_id INT NOT NULL AUTO_INCREMENT,
+  department_name VARCHAR(100) NOT NULL,
+  over_head_cost DECIMAL (10,2) NOT NULL,
+  PRIMARY KEY (department_id)
+);
+
+ALTER TABLE products
+ADD product_sales DECIMAL(10,2) NOT NULL;
