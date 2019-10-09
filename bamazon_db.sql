@@ -31,6 +31,7 @@ CREATE TABLE departments (
 ALTER TABLE products
 ADD product_sales DECIMAL(10,2) NOT NULL;
 
+SELECT department_name, SUM(product_sales) FROM products GROUP BY department_name;
 SELECT products.department_name, products.product_sales, departments.department_name, departments.department_id, departments.over_head_cost FROM departments LEFT JOIN products ON products.department_name = departments.department_name;
 
 INSERT INTO departments (department_name, over_head_cost)
