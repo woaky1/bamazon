@@ -76,6 +76,8 @@ function lowInventory() {
 
 // This function lets the user add additional stock to an item that's already in the db.
 function addInventory() {
+    connection.query('SELECT * FROM products', function (error, results) {
+        if (error) throw error;
     inquirer
     .prompt([
         {
@@ -115,6 +117,7 @@ function addInventory() {
             }
             )
       });
+    })
 }
 
 // This function let's the user add a new item to the db.
