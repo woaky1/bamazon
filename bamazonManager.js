@@ -66,9 +66,13 @@ function productsForSale(){
 function lowInventory() {
     connection.query("SELECT * from products WHERE stock_quantity < 5", function(error, results) {
         if (error) throw error;
-        for (var j = 0; j < results.length; j++) {
-            console.log(`Item ID: ${results[j].item_id}\nProduct Name: ${results[j].product_name}\nPrice: ${results[j].price}\nQuantity: ${results[j].stock_quantity}`);
-            console.log("--------------------------");
+        if (results.length === 0) {
+            console.log("No items are low at this time.")
+        } else {
+            for (var j = 0; j < results.length; j++) {
+                console.log(`Item ID: ${results[j].item_id}\nProduct Name: ${results[j].product_name}\nPrice: ${results[j].price}\nQuantity: ${results[j].stock_quantity}`);
+                console.log("--------------------------");
+            }
         }
         connection.end();
     })
@@ -76,8 +80,10 @@ function lowInventory() {
 
 // This function lets the user add additional stock to an item that's already in the db.
 function addInventory() {
-    connection.query('SELECT * FROM products', function (error, results) {
+    // We make this query so we can know the item ids and compare them to the one the user enters and validate it.
+    connection.query('SELECT item_id FROM products', function (error, results) {
         if (error) throw error;
+    // Now we ask the user which item to update and by how much.
     inquirer
     .prompt([
         {
@@ -106,6 +112,7 @@ function addInventory() {
             }
         }
       ])
+    //   Now we take the input from the user and use it to update the db.
       .then(function (response) {
         var stockNum = parseInt(response.addedStock);
         var itemID = parseInt(response.itemID);
@@ -117,11 +124,12 @@ function addInventory() {
             }
             )
       });
-    })
+    });
 }
 
 // This function let's the user add a new item to the db.
 function addProduct() {
+    // First, we need to get all the necessary info so we can populate it to the db.
     inquirer
         .prompt([
             {
@@ -137,14 +145,32 @@ function addProduct() {
             {
                 type: "input",
                 name: "price",
-                message: "How much does the item cost?"
+                message: "How much does the item cost?",
+                // Some validation here and in the next question to make sure we're getting number. Decimals here are okay, but integers only for the next question.
+                validate: function(value) {
+                    var pass = parseFloat(value);
+                    if ((pass) && (pass > 0)) {
+                      return true;
+                    }
+              
+                    return 'Please enter a positive number.';
+                }
             },
             {
                 type: "input",
                 name: "quantity",
-                message: "How much of the item is in stock?"
+                message: "How much of the item is in stock?",
+                validate: function(value) {
+                    var pass = parseInt(value);
+                    if ((pass) && (pass > 0)) {
+                      return true;
+                    }
+              
+                    return 'Please enter a positive number.';
+                }
             }
         ])
+        // Now we take the data we got from the user and pass it on to the db.
         .then(function(response) {
             var priceFloat = parseFloat(response.price);
             var quantityInt = parseInt(response.quantity);
