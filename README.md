@@ -29,6 +29,7 @@ For any of the javascript files to work properly, you'll need to start by settin
 7. Hop over to the bamazon database and run `select * from products;` You'll see that the quantity for the item you chose has decreased by the amount you purchased.
 
 Here's a link to a video of the code in action:
+https://drive.google.com/file/d/1_lc20oyP5d9ev3fo9eLj81MfAFVT31WM/view?usp=sharing
 
 ### bamazonManager.js
 1. If you haven't already, run `npm i`.
@@ -41,6 +42,7 @@ Here's a link to a video of the code in action:
     - **Add New Product:** Answer a few questions and you can add a new item to the products table in the database. That item can then be seen, purchased, updated, etc., via bamazonCustomer.js or bamazonManager.js.
 
 Here's a link of this code in action:
+https://drive.google.com/file/d/1XxsQ0NxpzB7VlsXe_rqRNpiYyfTZzKO5/view?usp=sharing
 
 ## Tech Used
 The big two pieces of technology this project uses is mySQL for our database, and Node.js for our programming. It uses the mysql npm package to allow our Node.js to read and write to the mySQL database. It also uses the inquirer npm package to get the user's input via the CLI in a nice, user-friendly manner.
