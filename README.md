@@ -29,7 +29,7 @@ For any of the javascript files to work properly, you'll need to start by settin
 7. Hop over to the bamazon database and run `select * from products;` You'll see that the quantity for the item you chose has decreased by the amount you purchased.
 
 Here's a link to a video of the code in action:
-<a href="https://drive.google.com/file/d/1_lc20oyP5d9ev3fo9eLj81MfAFVT31WM/view?usp=sharing" target="_blank">https://drive.google.com/file/d/1_lc20oyP5d9ev3fo9eLj81MfAFVT31WM/view?usp=sharing</a>
+<a href="https://drive.google.com/file/d/1_lc20oyP5d9ev3fo9eLj81MfAFVT31WM/view?usp=sharing" target="_blank">test link</a>
 
 ### bamazonManager.js
 1. If you haven't already, run `npm i`.
